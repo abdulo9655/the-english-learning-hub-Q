@@ -1,761 +1,712 @@
+🐵
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Queue Remote</title>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Queue System</title>
 
 <style>
+
 *{
   box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html,body{
   margin:0;
-  min-height:100%;
-  font-family:Arial,"Noto Sans Thai",sans-serif;
-  background:#fff7fb;
-  color:#481d35;
+  padding:0;
 }
 
 body{
-  overflow-x:hidden;
+  font-family:
+  system-ui,
+  -apple-system,
+  BlinkMacSystemFont,
+  "Segoe UI",
+  sans-serif;
+
+  background:
+  linear-gradient(
+    135deg,
+    #fff,
+    #ffe8f2
+  );
+
+  min-height:100vh;
+  color:#333;
 }
 
 button{
   font-family:inherit;
-  border:0;
   cursor:pointer;
 }
 
-.app{
-  min-height:100vh;
-  padding:14px;
-  position:relative;
-  overflow:hidden;
-
-  background:
-    radial-gradient(
-      circle at 50% -10%,
-      #ffafd1 0%,
-      #ffe0ec 27%,
-      #fff6fa 60%,
-      #ffffff 100%
-    );
-}
-
-/* พื้นหลัง */
-
-.circle{
-  position:fixed;
-  border-radius:50%;
-  pointer-events:none;
-  z-index:0;
-}
-
-.circle1{
-  width:320px;
-  height:320px;
-  background:#ff9fc8;
-  left:-170px;
-  top:-160px;
-  opacity:.28;
-}
-
-.circle2{
-  width:360px;
-  height:360px;
-  background:#ffc9df;
-  right:-180px;
-  bottom:-160px;
-  opacity:.35;
-}
-
-.circle3{
-  width:150px;
-  height:150px;
-  background:#ff8fbd;
-  right:12%;
-  top:18%;
-  opacity:.12;
-}
-
-/* HEADER */
-
 .header{
-  position:relative;
-  z-index:2;
+  padding:20px;
+  text-align:center;
 
-  width:min(1200px,100%);
-  margin:auto;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  padding:15px 19px;
-
-  background:#ffffffdf;
-  border:1px solid #ffffff;
-
-  border-radius:21px;
+  background:white;
 
   box-shadow:
-    0 12px 40px #d72e7618;
+  0 4px 20px rgba(255,80,140,.15);
 
-  backdrop-filter:blur(18px);
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 
-.logo{
-  font-size:23px;
-  font-weight:1000;
-  letter-spacing:-1px;
+.header h1{
+  color:#ec3d82;
+  font-size:clamp(25px,5vw,42px);
 }
 
-.logo span{
-  color:#eb3f86;
+.header p{
+  color:#888;
+  margin-top:5px;
 }
-
-.mode{
-  background:#fff0f7;
-  color:#cf3976;
-
-  padding:8px 13px;
-  border-radius:50px;
-
-  font-size:13px;
-  font-weight:900;
-}
-
-/* CARD */
 
 .container{
-  position:relative;
-  z-index:2;
-
-  width:min(1050px,100%);
-  margin:24px auto;
+  width:min(1100px,94%);
+  margin:30px auto;
 }
 
 .card{
-  background:#fffffff2;
-  border:1px solid white;
-  border-radius:29px;
-
-  padding:28px;
+  background:white;
+  border-radius:25px;
+  padding:25px;
+  margin-bottom:20px;
 
   box-shadow:
-    0 22px 70px #c92d7018;
-
-  backdrop-filter:blur(20px);
+  0 10px 35px rgba(236,61,130,.12);
 }
 
-/* DISPLAY */
-
-.displayArea{
-  position:relative;
-  z-index:2;
-
-  min-height:
-    calc(100vh - 105px);
-
-  display:grid;
-  place-items:center;
+.mode-title{
+  font-size:25px;
+  font-weight:800;
+  color:#ec3d82;
+  margin-bottom:20px;
 }
 
-.displayCard{
-  width:min(900px,95vw);
+.big-number{
   text-align:center;
-  padding:40px 25px;
-}
-
-.displayTitle{
-  font-size:
-    clamp(18px,3vw,28px);
-
-  color:#ad527d;
+  font-size:clamp(70px,15vw,170px);
   font-weight:900;
-}
-
-.currentQueue{
-  font-size:
-    clamp(95px,22vw,220px);
-
-  line-height:.9;
-
-  margin:42px 0 25px;
-
-  color:#e83c83;
-
-  font-weight:1000;
-
-  letter-spacing:-7px;
-
-  text-shadow:
-    0 12px 35px #e83c8320;
+  color:#ec3d82;
+  line-height:1;
+  padding:30px 10px;
 }
 
 .channel{
-  font-size:
-    clamp(21px,4vw,32px);
-
-  color:#8e476b;
-  font-weight:900;
+  text-align:center;
+  font-size:clamp(24px,5vw,42px);
+  font-weight:800;
+  color:#555;
 }
 
-.waiting{
+.status{
+  text-align:center;
   margin-top:15px;
-
-  color:#aa7190;
-  font-size:17px;
+  color:#999;
 }
 
-/* CONTROL */
-
-.controlTitle{
-  font-size:23px;
-  font-weight:1000;
-  color:#702b4e;
-}
-
-.controlCurrent{
-  text-align:center;
-
-  font-size:
-    clamp(80px,16vw,155px);
-
-  line-height:1;
-
-  margin:28px 0;
-
-  color:#e83c83;
-
-  font-weight:1000;
-}
-
-.controlInfo{
-  text-align:center;
-  color:#a86b89;
-}
-
-.buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-
-  gap:13px;
-
-  margin-top:27px;
-}
-
-.btn{
-  min-height:62px;
-
-  border-radius:17px;
-
-  font-size:17px;
-  font-weight:1000;
-
-  transition:.15s;
-}
-
-.btn:active{
-  transform:scale(.96);
-}
-
-.primary{
+button.main{
+  width:100%;
+  border:0;
+  border-radius:20px;
+  padding:22px;
+  background:#ec3d82;
   color:white;
-
-  background:
-    linear-gradient(
-      135deg,
-      #ff65a5,
-      #e92f7d
-    );
+  font-size:25px;
+  font-weight:800;
 
   box-shadow:
-    0 10px 28px #e43a8128;
+  0 8px 20px rgba(236,61,130,.3);
+
+  transition:.2s;
 }
 
-.secondary{
-  color:#983e68;
-  background:#fff0f7;
+button.main:hover{
+  transform:translateY(-2px);
 }
 
-.success{
-  color:white;
-
-  background:
-    linear-gradient(
-      135deg,
-      #36c99a,
-      #17a878
-    );
+button.main:active{
+  transform:scale(.98);
 }
 
-.danger{
-  color:white;
-
-  background:
-    linear-gradient(
-      135deg,
-      #ff7188,
-      #eb3e5e
-    );
-}
-
-.wide{
-  grid-column:1/-1;
-}
-
-/* KIOSK */
-
-.kioskArea{
-  position:relative;
-  z-index:2;
-
-  min-height:
-    calc(100vh - 105px);
-
+.grid{
   display:grid;
-  place-items:center;
+  grid-template-columns:
+  repeat(2,minmax(0,1fr));
+  gap:15px;
 }
 
-.kioskButton{
-  width:min(700px,94vw);
+button.secondary{
+  border:2px solid #ffc1d9;
+  background:#fff4f8;
+  color:#d82e70;
 
-  height:min(580px,67vh);
-
-  border-radius:46px;
-
-  color:white;
-
-  background:
-    linear-gradient(
-      145deg,
-      #ff78b1,
-      #ed3984
-    );
-
-  box-shadow:
-    0 30px 90px #d72d7735;
-
-  font-size:
-    clamp(43px,9vw,85px);
-
-  font-weight:1000;
-
-  transition:.15s;
-}
-
-.kioskButton:active{
-  transform:scale(.97);
-}
-
-.kioskIcon{
-  display:block;
-  margin-bottom:18px;
-}
-
-.kioskSub{
-  display:block;
-
-  margin-top:20px;
+  border-radius:16px;
+  padding:18px;
 
   font-size:18px;
-  opacity:.88;
-
   font-weight:700;
 }
 
-/* TICKET POPUP */
+button.danger{
+  border:0;
+  background:#ff557f;
+  color:white;
+  border-radius:16px;
+  padding:18px;
+  font-size:18px;
+  font-weight:700;
+}
+
+input{
+  width:100%;
+  padding:18px;
+  border-radius:15px;
+  border:2px solid #ffd0e1;
+  outline:none;
+  font-size:20px;
+  margin-bottom:12px;
+}
+
+input:focus{
+  border-color:#ec3d82;
+}
+
+.info{
+  display:grid;
+  grid-template-columns:
+  repeat(3,1fr);
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.info-box{
+  background:#fff5f9;
+  border-radius:18px;
+  padding:20px;
+  text-align:center;
+}
+
+.info-box small{
+  display:block;
+  color:#999;
+  margin-bottom:7px;
+}
+
+.info-box strong{
+  font-size:30px;
+  color:#ec3d82;
+}
 
 .popup{
   position:fixed;
   inset:0;
 
-  z-index:100;
+  background:
+  rgba(255,255,255,.92);
 
   display:none;
-  place-items:center;
+  align-items:center;
+  justify-content:center;
 
-  padding:20px;
-
-  background:#43162f9e;
-
-  backdrop-filter:blur(9px);
+  z-index:100;
 }
 
 .popup.show{
-  display:grid;
+  display:flex;
 }
 
-.ticket{
-  width:min(560px,94vw);
-
+.popup-box{
+  width:min(500px,90%);
   background:white;
-
-  color:#481d35;
-
-  border-radius:32px;
-
+  border-radius:30px;
   padding:35px;
-
   text-align:center;
 
   box-shadow:
-    0 30px 100px #0003;
-
-  animation:
-    popup .25s ease;
+  0 20px 60px rgba(236,61,130,.25);
 }
 
-@keyframes popup{
-
-  from{
-    opacity:0;
-    transform:scale(.85);
-  }
-
-  to{
-    opacity:1;
-    transform:scale(1);
-  }
-
+.popup-box h2{
+  color:#ec3d82;
+  font-size:32px;
+  margin-bottom:15px;
 }
 
-.ticketTitle{
-  font-size:22px;
-  color:#a5577e;
+.popup-number{
+  font-size:90px;
   font-weight:900;
+  color:#ec3d82;
+  margin:20px 0;
 }
-
-.ticketNumber{
-  margin:25px 0;
-
-  font-size:
-    clamp(90px,20vw,170px);
-
-  line-height:1;
-
-  color:#e83c83;
-
-  font-weight:1000;
-}
-
-.ticketText{
-  color:#a66c8b;
-}
-
-/* LOCK */
 
 .lock{
   position:fixed;
   inset:0;
 
-  z-index:200;
+  background:
+  rgba(255,255,255,.96);
+
+  z-index:90;
 
   display:none;
-  place-items:center;
+  align-items:center;
+  justify-content:center;
 
   text-align:center;
-
-  background:#fff8fceF;
-
-  backdrop-filter:blur(20px);
 }
 
 .lock.show{
-  display:grid;
+  display:flex;
 }
 
-.lockIcon{
-  font-size:90px;
+.lock h2{
+  font-size:45px;
+  color:#ec3d82;
 }
 
-.lockTitle{
-  margin-top:15px;
-
-  font-size:31px;
-
-  font-weight:1000;
-
-  color:#702b4e;
+.lock p{
+  margin-top:10px;
+  color:#888;
 }
 
-.lockText{
-  margin-top:8px;
-  color:#a86c8b;
+.hidden{
+  display:none!important;
 }
 
-/* STATUS */
-
-.status{
-  display:inline-flex;
-  align-items:center;
-
-  gap:7px;
-
-  color:#299d76;
-
-  font-size:13px;
-  font-weight:900;
+.footer{
+  text-align:center;
+  padding:30px;
+  color:#aaa;
 }
 
-.dot{
-  width:8px;
-  height:8px;
+@media(max-width:600px){
 
-  border-radius:50%;
-
-  background:#31c18e;
-}
-
-/* MOBILE */
-
-@media(max-width:700px){
-
-  .app{
-    padding:9px;
-  }
-
-  .header{
-    padding:13px 14px;
-    border-radius:18px;
-  }
-
-  .logo{
-    font-size:19px;
-  }
-
-  .buttons{
+  .grid{
     grid-template-columns:1fr;
   }
 
-  .wide{
-    grid-column:auto;
+  .info{
+    grid-template-columns:1fr;
   }
 
   .card{
-    padding:20px;
-    border-radius:24px;
-  }
-
-  .displayCard{
-    padding:35px 17px;
-  }
-
-  .kioskButton{
-    height:63vh;
-    border-radius:36px;
+    padding:18px;
   }
 
 }
 
-@media(max-height:600px){
-
-  .kioskButton{
-    height:72vh;
-  }
-
-}
 </style>
+
 </head>
 
 <body>
 
-<div class="app">
+<div class="header">
 
-  <div class="circle circle1"></div>
-  <div class="circle circle2"></div>
-  <div class="circle circle3"></div>
+  <h1>🎀 Queue System</h1>
 
-  <div id="root"></div>
+  <p id="modeText">
+    ระบบเรียกคิว
+  </p>
 
 </div>
 
+
+<div class="container">
+
+
+<!-- DISPLAY -->
+
+<section id="displayMode" class="hidden">
+
+  <div class="card">
+
+    <div class="mode-title">
+      📺 หน้าจอเรียกคิว
+    </div>
+
+    <div
+      id="displayNumber"
+      class="big-number">
+      ---
+    </div>
+
+    <div
+      id="displayChannel"
+      class="channel">
+      กรุณารอสักครู่
+    </div>
+
+    <div
+      id="displayStatus"
+      class="status">
+      กำลังเชื่อมต่อ...
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CONTROL -->
+
+<section id="controlMode" class="hidden">
+
+  <div class="card">
+
+    <div class="mode-title">
+      🎛️ แผงควบคุม
+    </div>
+
+    <div class="info">
+
+      <div class="info-box">
+        <small>คิวปัจจุบัน</small>
+        <strong id="controlCurrent">
+          ---
+        </strong>
+      </div>
+
+      <div class="info-box">
+        <small>ช่องบริการ</small>
+        <strong id="controlChannel">
+          1
+        </strong>
+      </div>
+
+      <div class="info-box">
+        <small>คิวถัดไป</small>
+        <strong id="controlNext">
+          1
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="grid">
+
+      <button
+        class="main"
+        onclick="nextQueue()">
+        📢 เรียกคิวถัดไป
+      </button>
+
+      <button
+        class="secondary"
+        onclick="recall()">
+        🔊 เรียกซ้ำ
+      </button>
+
+      <button
+        class="secondary"
+        onclick="changeChannel()">
+        🔢 เปลี่ยนช่อง
+      </button>
+
+      <button
+        class="secondary"
+        onclick="toggleLock()">
+        🔒 ล็อก/ปลดล็อกหน้าจอ
+      </button>
+
+      <button
+        class="danger"
+        onclick="resetQueue()">
+        🗑️ รีเซ็ตคิว
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- KIOSK -->
+
+<section id="kioskMode" class="hidden">
+
+  <div class="card">
+
+    <div class="mode-title">
+      🎟️ รับบัตรคิว
+    </div>
+
+    <button
+      class="main"
+      style="font-size:32px;padding:45px 20px"
+      onclick="takeTicket()">
+
+      🎫
+      <br>
+      กดรับบัตรคิว
+
+    </button>
+
+    <div
+      id="kioskStatus"
+      class="status">
+
+      พร้อมรับบัตรคิว
+
+    </div>
+
+  </div>
+
+</section>
+
+
+</div>
+
+
+<div class="footer">
+  Queue System • Pink Edition
+</div>
+
+
+<!-- TICKET POPUP -->
+
+<div
+  id="popup"
+  class="popup">
+
+  <div class="popup-box">
+
+    <h2>
+      🎉 ได้รับบัตรคิวแล้ว
+    </h2>
+
+    <div
+      id="popupNumber"
+      class="popup-number">
+      A001
+    </div>
+
+    <p>
+      กรุณารอเรียกหมายเลขของคุณ
+    </p>
+
+    <br>
+
+    <button
+      class="main"
+      onclick="closePopup()">
+      ตกลง
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- LOCK -->
+
+<div
+  id="lockScreen"
+  class="lock">
+
+  <div>
+
+    <h2>
+      🔒
+    </h2>
+
+    <h2>
+      กรุณารอสักครู่
+    </h2>
+
+    <p>
+      ระบบกำลังพักการเรียกคิว
+    </p>
+
+  </div>
+
+</div>
+
+
 <script>
 
-/* =====================================================
+/* =================================
    API
-===================================================== */
+================================= */
 
 const API =
 "https://script.google.com/macros/s/AKfycbx0vgr-86AFRYBAzJCglbLAaMjauxQ65YM_5lqlJZiDsUFPWVmdLzx2Smp5NhsHTjQODQ/exec";
 
 
-/* =====================================================
+/* =================================
    MODE
-===================================================== */
+================================= */
 
 const params =
-new URLSearchParams(
-  location.search
-);
+new URLSearchParams(location.search);
 
 const mode =
 params.get("mode") || "display";
 
 
-/*
-  display = หน้าจอ
-  control = เจ้าหน้าที่
-  kiosk   = กดบัตร
-*/
+if(mode === "control"){
 
+  document
+  .getElementById("controlMode")
+  .classList.remove("hidden");
 
-/* =====================================================
-   DATA
-===================================================== */
+  document
+  .getElementById("modeText")
+  .textContent =
+  "โหมดควบคุม";
 
-let data = {
+}
 
-  current:"-",
+else if(mode === "kiosk"){
 
-  channel:"1",
+  document
+  .getElementById("kioskMode")
+  .classList.remove("hidden");
 
-  locked:false,
+  document
+  .getElementById("modeText")
+  .textContent =
+  "โหมดรับบัตรคิว";
 
-  waiting:0
+}
 
-};
+else{
 
+  document
+  .getElementById("displayMode")
+  .classList.remove("hidden");
 
-/* =====================================================
-   JSONP
-===================================================== */
-
-function request(
-  action,
-  body={}
-){
-
-  return new Promise(
-    (resolve,reject)=>{
-
-      const callback =
-        "queue_" +
-        Date.now() +
-        "_" +
-        Math.floor(
-          Math.random()*99999
-        );
-
-
-      let script =
-        document.createElement(
-          "script"
-        );
-
-
-      window[callback] =
-        function(result){
-
-          try{
-            delete window[callback];
-          }catch(e){}
-
-          if(script)
-            script.remove();
-
-          resolve(result);
-
-        };
-
-
-      const query =
-        new URLSearchParams();
-
-
-      query.set(
-        "action",
-        action
-      );
-
-
-      query.set(
-        "callback",
-        callback
-      );
-
-
-      Object.keys(body)
-        .forEach(
-          key=>{
-
-            query.set(
-              key,
-              body[key]
-            );
-
-          }
-        );
-
-
-      script.src =
-        API +
-        "?" +
-        query.toString();
-
-
-      script.onerror =
-        function(){
-
-          try{
-            delete window[callback];
-          }catch(e){}
-
-          script.remove();
-
-          reject(
-            new Error(
-              "เชื่อมต่อระบบคิวไม่ได้"
-            )
-          );
-
-        };
-
-
-      document.body.appendChild(
-        script
-      );
-
-
-      setTimeout(
-        ()=>{
-
-          if(
-            window[callback]
-          ){
-
-            try{
-              delete window[callback];
-            }catch(e){}
-
-            script.remove();
-
-            reject(
-              new Error(
-                "ระบบไม่ตอบกลับ"
-              )
-            );
-
-          }
-
-        },
-        12000
-      );
-
-    }
-  );
+  document
+  .getElementById("modeText")
+  .textContent =
+  "โหมดหน้าจอแสดงคิว";
 
 }
 
 
-/* =====================================================
+/* =================================
+   JSONP REQUEST
+================================= */
+
+function request(action, data = {}){
+
+  return new Promise((resolve,reject)=>{
+
+    const callback =
+      "queueCallback_" +
+      Date.now() +
+      "_" +
+      Math.floor(Math.random()*100000);
+
+
+    const script =
+      document.createElement("script");
+
+
+    let finished = false;
+
+
+    window[callback] =
+      function(result){
+
+        if(finished) return;
+
+        finished = true;
+
+        cleanup();
+
+        resolve(result);
+
+      };
+
+
+    function cleanup(){
+
+      try{
+        script.remove();
+      }catch(e){}
+
+      try{
+        delete window[callback];
+      }catch(e){}
+
+    }
+
+
+    const query =
+      new URLSearchParams();
+
+    query.set("action",action);
+    query.set("callback",callback);
+
+
+    Object.keys(data).forEach(key=>{
+
+      query.set(
+        key,
+        String(data[key])
+      );
+
+    });
+
+
+    script.src =
+      API + "?" + query.toString();
+
+
+    script.onerror =
+      function(){
+
+        if(finished) return;
+
+        finished = true;
+
+        cleanup();
+
+        reject(
+          new Error(
+            "เชื่อมต่อ Google Apps Script ไม่สำเร็จ"
+          )
+        );
+
+      };
+
+
+    document.body.appendChild(script);
+
+
+    setTimeout(()=>{
+
+      if(finished) return;
+
+      finished = true;
+
+      cleanup();
+
+      reject(
+        new Error(
+          "Google Apps Script ไม่ตอบกลับ"
+        )
+      );
+
+    },15000);
+
+  });
+
+}
+
+
+/* =================================
    SOUND
-===================================================== */
+================================= */
 
 function beep(){
 
@@ -765,21 +716,17 @@ function beep(){
       window.AudioContext ||
       window.webkitAudioContext;
 
-
-    if(!AudioContext)
-      return;
-
+    if(!AudioContext) return;
 
     const ctx =
       new AudioContext();
 
+    const now =
+      ctx.currentTime;
 
-    const notes =
-      [660,880,1040];
 
-
-    notes.forEach(
-      (frequency,index)=>{
+    [0,0.18,0.36].forEach(
+      (delay,index)=>{
 
         const osc =
           ctx.createOscillator();
@@ -788,485 +735,185 @@ function beep(){
           ctx.createGain();
 
 
-        osc.type =
-          "sine";
-
         osc.frequency.value =
-          frequency;
+          [700,900,1100][index];
+
+        gain.gain.value = 0.15;
 
 
         osc.connect(gain);
-
-        gain.connect(
-          ctx.destination
-        );
+        gain.connect(ctx.destination);
 
 
-        gain.gain.setValueAtTime(
-          .12,
-          ctx.currentTime +
-          index*.15
-        );
-
-
-        osc.start(
-          ctx.currentTime +
-          index*.15
-        );
-
-
-        osc.stop(
-          ctx.currentTime +
-          index*.15 +
-          .13
-        );
+        osc.start(now + delay);
+        osc.stop(now + delay + 0.12);
 
       }
     );
 
-  }catch(error){
-
-    console.log(error);
-
-  }
+  }catch(e){}
 
 }
 
 
-/* =====================================================
+/* =================================
    VOICE
-===================================================== */
+================================= */
 
-function speak(
-  number,
-  channel
-){
+function speak(ticket,channel){
 
   try{
 
-    if(
-      !window.speechSynthesis
-    )
+    if(!window.speechSynthesis)
       return;
 
 
     speechSynthesis.cancel();
 
 
-    const utterance =
-      new SpeechSynthesisUtterance(
-
-        "เชิญหมายเลข " +
-        number +
-        " ที่ช่อง " +
-        channel
-
-      );
+    const text =
+      "เชิญหมายเลข " +
+      ticket +
+      " ที่ช่อง " +
+      channel;
 
 
-    utterance.lang =
-      "th-TH";
-
-    utterance.rate =
-      .88;
-
-    utterance.pitch =
-      1;
+    const utter =
+      new SpeechSynthesisUtterance(text);
 
 
-    speechSynthesis.speak(
-      utterance
-    );
+    utter.lang = "th-TH";
+    utter.rate = 0.85;
+    utter.pitch = 1;
 
-  }catch(error){
 
-    console.log(error);
+    speechSynthesis.speak(utter);
 
-  }
+  }catch(e){}
 
 }
 
 
-/* =====================================================
-   ESCAPE
-===================================================== */
+/* =================================
+   DISPLAY REFRESH
+================================= */
 
-function esc(value){
+let lastCurrent = "";
 
-  return String(
-    value ?? ""
-  ).replace(
-    /[&<>"']/g,
-    char=>({
-
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#39;"
-
-    })[char]
-  );
-
-}
-
-
-/* =====================================================
-   HEADER
-===================================================== */
-
-function header(
-  title
-){
-
-  return `
-
-    <div class="header">
-
-      <div class="logo">
-        QUEUE
-        <span>REMOTE</span>
-      </div>
-
-      <div
-        style="
-          display:flex;
-          align-items:center;
-          gap:12px;
-        "
-      >
-
-        <div class="status">
-          <span class="dot"></span>
-          ONLINE
-        </div>
-
-        <div class="mode">
-          ${esc(title)}
-        </div>
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =====================================================
-   DISPLAY
-===================================================== */
-
-function showDisplay(){
-
-  root.innerHTML = `
-
-    ${header("DISPLAY")}
-
-    <div class="displayArea">
-
-      <div class="card displayCard">
-
-        <div class="displayTitle">
-          🎀 กรุณารอเรียกคิว
-        </div>
-
-        <div
-          class="currentQueue"
-        >
-          ${esc(data.current)}
-        </div>
-
-        <div class="channel">
-          ช่อง ${esc(data.channel)}
-        </div>
-
-        <div class="waiting">
-          คิวที่รออยู่
-          <b>
-            ${data.waiting}
-          </b>
-          คิว
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div
-      class="lock ${
-        data.locked
-        ? "show"
-        : ""
-      }"
-    >
-
-      <div>
-
-        <div class="lockIcon">
-          🔒
-        </div>
-
-        <div class="lockTitle">
-          หน้าจอถูกล็อก
-        </div>
-
-        <div class="lockText">
-          กรุณารอเจ้าหน้าที่ปลดล็อก
-        </div>
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =====================================================
-   CONTROL
-===================================================== */
-
-function showControl(){
-
-  root.innerHTML = `
-
-    ${header("CONTROL")}
-
-    <div class="container">
-
-      <div class="card">
-
-        <div class="controlTitle">
-          🎛️ ศูนย์ควบคุมคิว
-        </div>
-
-        <div
-          style="
-            margin-top:6px;
-            color:#ad7391;
-            font-size:14px;
-          "
-        >
-          เจ้าหน้าที่
-        </div>
-
-
-        <div class="controlCurrent">
-          ${esc(data.current)}
-        </div>
-
-
-        <div class="controlInfo">
-
-          ช่อง
-          <b>
-            ${esc(data.channel)}
-          </b>
-
-          &nbsp; • &nbsp;
-
-          รอ
-          <b>
-            ${data.waiting}
-          </b>
-          คิว
-
-        </div>
-
-
-        <div class="buttons">
-
-
-          <button
-            class="btn primary"
-            onclick="nextQueue()"
-          >
-            ▶️ เรียกคิวถัดไป
-          </button>
-
-
-          <button
-            class="btn secondary"
-            onclick="recallQueue()"
-          >
-            🔊 เรียกซ้ำ
-          </button>
-
-
-          <button
-            class="btn secondary"
-            onclick="changeChannel()"
-          >
-            🏢 เปลี่ยนช่อง
-          </button>
-
-
-          <button
-            class="btn ${
-              data.locked
-              ? "success"
-              : "danger"
-            }"
-            onclick="toggleLock()"
-          >
-
-            ${
-              data.locked
-              ? "🔓 ปลดล็อกหน้าจอ"
-              : "🔒 ล็อกหน้าจอ"
-            }
-
-          </button>
-
-
-          <button
-            class="btn danger wide"
-            onclick="resetQueue()"
-          >
-            🗑️ รีเซ็ตคิววันนี้
-          </button>
-
-
-        </div>
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =====================================================
-   KIOSK
-===================================================== */
-
-function showKiosk(){
-
-  root.innerHTML = `
-
-    ${header("KIOSK")}
-
-    <div class="kioskArea">
-
-      <button
-        class="kioskButton"
-        onclick="takeTicket()"
-      >
-
-        <span class="kioskIcon">
-          🎫
-        </span>
-
-        กดบัตรคิว
-
-        <span class="kioskSub">
-          แตะที่นี่เพื่อรับหมายเลขคิว
-        </span>
-
-      </button>
-
-    </div>
-
-
-    <div
-      id="ticketPopup"
-      class="popup"
-    >
-
-      <div class="ticket">
-
-        <div class="ticketTitle">
-          🎀 บัตรคิวของคุณ
-        </div>
-
-        <div
-          id="ticketNumber"
-          class="ticketNumber"
-        >
-          A000
-        </div>
-
-        <div class="ticketText">
-          กรุณารอเรียกหมายเลขของคุณ
-        </div>
-
-        <button
-          class="btn primary"
-          style="
-            width:100%;
-            margin-top:25px;
-          "
-          onclick="closeTicket()"
-        >
-          ✓ ตกลง
-        </button>
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =====================================================
-   REFRESH
-===================================================== */
 
 async function refresh(){
 
   try{
 
-    const result =
-      await request(
-        "state"
+    const data =
+      await request("state");
+
+
+    if(!data || !data.ok){
+
+      showError(
+        data?.error ||
+        "ระบบไม่ตอบกลับ"
       );
 
+      return;
 
-    if(
-      result &&
-      result.current !== undefined
-    ){
-
-      data = {
-
-        current:
-          result.current ?? "-",
-
-        channel:
-          result.channel ?? "1",
-
-        locked:
-          result.locked === true ||
-          String(
-            result.locked
-          ).toLowerCase()
-          === "true",
-
-        waiting:
-          Number(
-            result.waiting ?? 0
-          )
-
-      };
+    }
 
 
-      render();
+    const current =
+      data.current || "---";
+
+    const channel =
+      data.channel || 1;
+
+
+    if(mode === "display"){
+
+      document
+      .getElementById("displayNumber")
+      .textContent =
+      current;
+
+
+      document
+      .getElementById("displayChannel")
+      .textContent =
+      current === "---"
+      ? "กรุณารอสักครู่"
+      : "ช่องบริการ " + channel;
+
+
+      document
+      .getElementById("displayStatus")
+      .textContent =
+      "เชื่อมต่อระบบแล้ว";
+
+
+      const lockScreen =
+        document.getElementById(
+          "lockScreen"
+        );
+
+
+      if(data.locked){
+        lockScreen.classList.add("show");
+      }else{
+        lockScreen.classList.remove("show");
+      }
+
+
+      /*
+       * ถ้ามีคิวใหม่
+       * ให้หน้าจอพูด
+       */
+
+      if(
+        current !== "---" &&
+        current !== lastCurrent
+      ){
+
+        beep();
+
+        speak(
+          current,
+          channel
+        );
+
+      }
+
+
+      lastCurrent = current;
+
+    }
+
+
+    if(mode === "control"){
+
+      document
+      .getElementById("controlCurrent")
+      .textContent =
+      current;
+
+
+      document
+      .getElementById("controlChannel")
+      .textContent =
+      channel;
+
+
+      document
+      .getElementById("controlNext")
+      .textContent =
+      data.next || 1;
 
     }
 
   }catch(error){
 
-    console.log(
-      "Refresh:",
-      error
+    showError(
+      error.message ||
+      "ระบบไม่ตอบกลับ"
     );
 
   }
@@ -1274,54 +921,46 @@ async function refresh(){
 }
 
 
-/* =====================================================
-   NEXT QUEUE
-===================================================== */
+/* =================================
+   NEXT
+================================= */
 
 async function nextQueue(){
 
   try{
 
+    beep();
+
     const result =
-      await request(
-        "next"
-      );
+      await request("next");
 
 
-    if(result.ok){
-
-      beep();
-
-
-      speak(
-        result.number,
-        result.channel
-      );
-
-
-      data.current =
-        result.number;
-
-
-      data.channel =
-        result.channel;
-
-
-      showControl();
-
-
-    }else{
+    if(!result.ok){
 
       alert(
+        result.message ||
         result.error ||
-        "ไม่มีคิวรอ"
+        "ไม่มีคิว"
       );
 
+      return;
+
     }
+
+
+    speak(
+      result.ticket,
+      result.channel
+    );
+
+
+    await refresh();
+
 
   }catch(error){
 
     alert(
+      "ระบบไม่ตอบกลับ\n\n" +
       error.message
     );
 
@@ -1330,71 +969,42 @@ async function nextQueue(){
 }
 
 
-/* =====================================================
+/* =================================
    RECALL
-===================================================== */
+================================= */
 
-function recallQueue(){
-
-  if(
-    !data.current ||
-    data.current === "-"
-  ){
-
-    alert(
-      "ยังไม่มีคิวที่ถูกเรียก"
-    );
-
-    return;
-
-  }
-
-
-  beep();
-
-
-  speak(
-    data.current,
-    data.channel
-  );
-
-}
-
-
-/* =====================================================
-   LOCK
-===================================================== */
-
-async function toggleLock(){
+async function recall(){
 
   try{
 
-    const newValue =
-      !data.locked;
-
-
     const result =
-      await request(
-        "lock",
-        {
-          locked:newValue
-        }
+      await request("recall");
+
+
+    if(!result.ok){
+
+      alert(
+        result.message ||
+        "ยังไม่มีคิว"
       );
 
-
-    if(result.ok){
-
-      data.locked =
-        newValue;
-
-
-      showControl();
+      return;
 
     }
+
+
+    beep();
+
+    speak(
+      result.ticket,
+      result.channel
+    );
+
 
   }catch(error){
 
     alert(
+      "ระบบไม่ตอบกลับ\n\n" +
       error.message
     );
 
@@ -1403,23 +1013,32 @@ async function toggleLock(){
 }
 
 
-/* =====================================================
+/* =================================
    CHANNEL
-===================================================== */
+================================= */
 
 async function changeChannel(){
 
   const value =
     prompt(
-      "กรอกหมายเลขช่อง",
-      data.channel
+      "กรอกหมายเลขช่องบริการ",
+      "1"
     );
 
 
-  if(
-    value === null ||
-    value.trim() === ""
-  ){
+  if(value === null)
+    return;
+
+
+  const channel =
+    Number(value);
+
+
+  if(!channel || channel < 1){
+
+    alert(
+      "กรุณาใส่หมายเลขช่องที่ถูกต้อง"
+    );
 
     return;
 
@@ -1432,24 +1051,30 @@ async function changeChannel(){
       await request(
         "channel",
         {
-          channel:value.trim()
+          channel:channel
         }
       );
 
 
-    if(result.ok){
+    if(!result.ok){
 
-      data.channel =
-        value.trim();
+      alert(
+        result.error ||
+        "เปลี่ยนช่องไม่สำเร็จ"
+      );
 
-
-      showControl();
+      return;
 
     }
+
+
+    await refresh();
+
 
   }catch(error){
 
     alert(
+      "ระบบไม่ตอบกลับ\n\n" +
       error.message
     );
 
@@ -1458,59 +1083,107 @@ async function changeChannel(){
 }
 
 
-/* =====================================================
+/* =================================
+   LOCK
+================================= */
+
+let isLocked = false;
+
+
+async function toggleLock(){
+
+  try{
+
+    const state =
+      await request("state");
+
+
+    isLocked =
+      !Boolean(state.locked);
+
+
+    const result =
+      await request(
+        "lock",
+        {
+          value:isLocked
+        }
+      );
+
+
+    if(!result.ok){
+
+      alert(
+        result.error ||
+        "เปลี่ยนสถานะไม่สำเร็จ"
+      );
+
+      return;
+
+    }
+
+
+    await refresh();
+
+
+  }catch(error){
+
+    alert(
+      "ระบบไม่ตอบกลับ\n\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =================================
    RESET
-===================================================== */
+================================= */
 
 async function resetQueue(){
 
-  if(
-    !confirm(
-      "ต้องการรีเซ็ตคิวทั้งหมดของวันนี้หรือไม่?"
-    )
-  ){
+  const confirmReset =
+    confirm(
+      "ต้องการรีเซ็ตคิวทั้งหมดใช่หรือไม่?"
+    );
 
+
+  if(!confirmReset)
     return;
-
-  }
 
 
   try{
 
     const result =
-      await request(
-        "reset"
-      );
+      await request("reset");
 
 
-    if(result.ok){
-
-      data.current =
-        "-";
-
-      data.waiting =
-        0;
-
-
-      alert(
-        "รีเซ็ตคิวเรียบร้อยแล้ว"
-      );
-
-
-      showControl();
-
-    }else{
+    if(!result.ok){
 
       alert(
         result.error ||
         "รีเซ็ตไม่สำเร็จ"
       );
 
+      return;
+
     }
+
+
+    alert(
+      "รีเซ็ตคิวเรียบร้อยแล้ว"
+    );
+
+
+    await refresh();
+
 
   }catch(error){
 
     alert(
+      "ระบบไม่ตอบกลับ\n\n" +
       error.message
     );
 
@@ -1519,56 +1192,134 @@ async function resetQueue(){
 }
 
 
-/* =====================================================
+/* =================================
    TAKE TICKET
-===================================================== */
+================================= */
 
 async function takeTicket(){
+
+  const status =
+    document.getElementById(
+      "kioskStatus"
+    );
+
+
+  status.textContent =
+    "กำลังออกบัตรคิว...";
+
+
+  try{
+
+    beep();
+
+
+    const result =
+      await request("take");
+
+
+    if(!result.ok){
+
+      status.textContent =
+        result.error ||
+        "ไม่สามารถออกบัตรคิวได้";
+
+      return;
+
+    }
+
+
+    document
+    .getElementById("popupNumber")
+    .textContent =
+    result.ticket;
+
+
+    document
+    .getElementById("popup")
+    .classList.add("show");
+
+
+    status.textContent =
+      "พร้อมรับบัตรคิว";
+
+
+  }catch(error){
+
+    status.textContent =
+      "ระบบไม่ตอบกลับ";
+
+    alert(
+      "ระบบไม่ตอบกลับ\n\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =================================
+   POPUP
+================================= */
+
+function closePopup(){
+
+  document
+  .getElementById("popup")
+  .classList.remove("show");
+
+}
+
+
+/* =================================
+   ERROR
+================================= */
+
+function showError(message){
+
+  if(mode === "display"){
+
+    document
+    .getElementById("displayStatus")
+    .textContent =
+      "⚠️ " + message;
+
+  }
+
+}
+
+
+/* =================================
+   START
+================================= */
+
+async function start(){
 
   try{
 
     const result =
-      await request(
-        "take"
-      );
+      await request("state");
 
 
-    if(result.ok){
+    if(!result.ok){
 
-      beep();
-
-
-      const number =
-        document.getElementById(
-          "ticketNumber"
-        );
-
-
-      number.textContent =
-        result.number;
-
-
-      document
-        .getElementById(
-          "ticketPopup"
-        )
-        .classList
-        .add("show");
-
-
-    }else{
-
-      alert(
+      showError(
         result.error ||
-        "ไม่สามารถออกบัตรคิวได้"
+        "ระบบไม่พร้อมใช้งาน"
       );
+
+      return;
 
     }
 
+
+    refresh();
+
+
   }catch(error){
 
-    alert(
-      error.message
+    showError(
+      "เชื่อมต่อระบบไม่ได้"
     );
 
   }
@@ -1576,73 +1327,24 @@ async function takeTicket(){
 }
 
 
-/* =====================================================
-   CLOSE TICKET
-===================================================== */
+/*
+ * Display / Control
+ * อัปเดตทุก 2 วินาที
+ */
 
-function closeTicket(){
+if(
+  mode === "display" ||
+  mode === "control"
+){
 
-  const popup =
-    document.getElementById(
-      "ticketPopup"
-    );
+  start();
 
-
-  if(popup){
-
-    popup
-      .classList
-      .remove("show");
-
-  }
+  setInterval(
+    refresh,
+    2000
+  );
 
 }
-
-
-/* =====================================================
-   RENDER
-===================================================== */
-
-function render(){
-
-  if(mode === "control"){
-
-    showControl();
-
-  }
-
-  else if(mode === "kiosk"){
-
-    showKiosk();
-
-  }
-
-  else{
-
-    showDisplay();
-
-  }
-
-}
-
-
-/* =====================================================
-   START
-===================================================== */
-
-render();
-
-refresh();
-
-
-/* =====================================================
-   AUTO REFRESH
-===================================================== */
-
-setInterval(
-  refresh,
-  2000
-);
 
 </script>
 
