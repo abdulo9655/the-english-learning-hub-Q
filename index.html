@@ -1,17 +1,12 @@
-🐵
 <!DOCTYPE html>
 <html lang="th">
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Queue System</title>
 
 <style>
-
 *{
   box-sizing:border-box;
   margin:0;
@@ -20,20 +15,17 @@ content="width=device-width,initial-scale=1.0">
 
 body{
   font-family:
-  system-ui,
-  -apple-system,
-  BlinkMacSystemFont,
-  "Segoe UI",
-  sans-serif;
-
-  background:
-  linear-gradient(
-    135deg,
-    #fff,
-    #ffe8f2
-  );
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 
   min-height:100vh;
+
+  background:
+    radial-gradient(circle at top left,#fff 0%,#fff4f8 35%,#ffdce9 100%);
+
   color:#333;
 }
 
@@ -43,27 +35,28 @@ button{
 }
 
 .header{
+  background:rgba(255,255,255,.95);
   padding:20px;
   text-align:center;
 
-  background:white;
-
-  box-shadow:
-  0 4px 20px rgba(255,80,140,.15);
-
   position:sticky;
   top:0;
-  z-index:10;
+  z-index:20;
+
+  box-shadow:
+    0 5px 25px rgba(220,50,110,.12);
 }
 
 .header h1{
-  color:#ec3d82;
-  font-size:clamp(25px,5vw,42px);
+  color:#e83278;
+  font-size:clamp(28px,5vw,46px);
+  font-weight:900;
 }
 
 .header p{
-  color:#888;
+  color:#777;
   margin-top:5px;
+  font-size:18px;
 }
 
 .container{
@@ -72,122 +65,122 @@ button{
 }
 
 .card{
-  background:white;
-  border-radius:25px;
-  padding:25px;
-  margin-bottom:20px;
+  background:rgba(255,255,255,.96);
+  border-radius:28px;
+  padding:28px;
+  margin-bottom:22px;
 
   box-shadow:
-  0 10px 35px rgba(236,61,130,.12);
+    0 12px 40px rgba(220,50,110,.13);
 }
 
 .mode-title{
-  font-size:25px;
-  font-weight:800;
-  color:#ec3d82;
-  margin-bottom:20px;
+  color:#e83278;
+  font-size:27px;
+  font-weight:900;
+  margin-bottom:22px;
 }
 
 .big-number{
   text-align:center;
-  font-size:clamp(70px,15vw,170px);
-  font-weight:900;
-  color:#ec3d82;
+  color:#e83278;
+  font-size:clamp(90px,18vw,190px);
+  font-weight:1000;
   line-height:1;
-  padding:30px 10px;
+  padding:30px 5px;
+
+  text-shadow:
+    0 5px 20px rgba(232,50,120,.18);
 }
 
 .channel{
   text-align:center;
-  font-size:clamp(24px,5vw,42px);
-  font-weight:800;
-  color:#555;
+  color:#444;
+  font-size:clamp(27px,5vw,48px);
+  font-weight:900;
 }
 
 .status{
   text-align:center;
-  margin-top:15px;
   color:#999;
+  font-size:17px;
+  margin-top:15px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:15px;
 }
 
 button.main{
   width:100%;
   border:0;
   border-radius:20px;
-  padding:22px;
-  background:#ec3d82;
+
+  background:
+    linear-gradient(135deg,#ed347c,#c9165c);
+
   color:white;
-  font-size:25px;
-  font-weight:800;
+  padding:23px 18px;
+
+  font-size:24px;
+  font-weight:900;
 
   box-shadow:
-  0 8px 20px rgba(236,61,130,.3);
+    0 9px 22px rgba(211,35,105,.28);
 
   transition:.2s;
 }
 
-button.main:hover{
-  transform:translateY(-2px);
-}
-
 button.main:active{
-  transform:scale(.98);
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:
-  repeat(2,minmax(0,1fr));
-  gap:15px;
+  transform:scale(.97);
 }
 
 button.secondary{
-  border:2px solid #ffc1d9;
-  background:#fff4f8;
-  color:#d82e70;
+  width:100%;
+  border:2px solid #ffc0d7;
+  border-radius:20px;
 
-  border-radius:16px;
-  padding:18px;
+  background:#fff6f9;
+  color:#d52568;
 
-  font-size:18px;
-  font-weight:700;
+  padding:20px 18px;
+
+  font-size:20px;
+  font-weight:800;
+
+  transition:.2s;
+}
+
+button.secondary:active{
+  transform:scale(.97);
 }
 
 button.danger{
-  border:0;
-  background:#ff557f;
-  color:white;
-  border-radius:16px;
-  padding:18px;
-  font-size:18px;
-  font-weight:700;
-}
-
-input{
   width:100%;
-  padding:18px;
-  border-radius:15px;
-  border:2px solid #ffd0e1;
-  outline:none;
-  font-size:20px;
-  margin-bottom:12px;
-}
+  border:0;
+  border-radius:20px;
 
-input:focus{
-  border-color:#ec3d82;
+  background:#e83261;
+  color:white;
+
+  padding:20px 18px;
+
+  font-size:20px;
+  font-weight:900;
 }
 
 .info{
   display:grid;
-  grid-template-columns:
-  repeat(3,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:15px;
   margin-bottom:20px;
 }
 
 .info-box{
-  background:#fff5f9;
-  border-radius:18px;
+  background:#fff4f8;
+  border-radius:20px;
   padding:20px;
   text-align:center;
 }
@@ -195,26 +188,40 @@ input:focus{
 .info-box small{
   display:block;
   color:#999;
-  margin-bottom:7px;
+  font-size:16px;
+  margin-bottom:8px;
 }
 
 .info-box strong{
-  font-size:30px;
-  color:#ec3d82;
+  display:block;
+  color:#e83278;
+  font-size:34px;
+}
+
+.sound-box{
+  background:#fff8fb;
+  border:2px dashed #ffc0d7;
+  border-radius:20px;
+  padding:18px;
+  margin-top:20px;
+  text-align:center;
+}
+
+.sound-box p{
+  color:#777;
+  margin-bottom:12px;
 }
 
 .popup{
   position:fixed;
   inset:0;
-
-  background:
-  rgba(255,255,255,.92);
+  z-index:100;
 
   display:none;
   align-items:center;
   justify-content:center;
 
-  z-index:100;
+  background:rgba(255,255,255,.94);
 }
 
 .popup.show{
@@ -222,36 +229,39 @@ input:focus{
 }
 
 .popup-box{
-  width:min(500px,90%);
+  width:min(520px,90%);
   background:white;
-  border-radius:30px;
+
+  border-radius:32px;
   padding:35px;
+
   text-align:center;
 
   box-shadow:
-  0 20px 60px rgba(236,61,130,.25);
+    0 20px 70px rgba(220,40,110,.25);
 }
 
 .popup-box h2{
-  color:#ec3d82;
+  color:#e83278;
   font-size:32px;
-  margin-bottom:15px;
 }
 
 .popup-number{
-  font-size:90px;
-  font-weight:900;
-  color:#ec3d82;
+  color:#e83278;
+  font-size:100px;
+  font-weight:1000;
   margin:20px 0;
+}
+
+.popup-box p{
+  color:#777;
+  font-size:19px;
+  margin-bottom:20px;
 }
 
 .lock{
   position:fixed;
   inset:0;
-
-  background:
-  rgba(255,255,255,.96);
-
   z-index:90;
 
   display:none;
@@ -259,24 +269,29 @@ input:focus{
   justify-content:center;
 
   text-align:center;
+
+  background:
+    rgba(255,255,255,.97);
 }
 
 .lock.show{
   display:flex;
 }
 
+.lock-icon{
+  font-size:80px;
+  margin-bottom:10px;
+}
+
 .lock h2{
-  font-size:45px;
-  color:#ec3d82;
+  color:#e83278;
+  font-size:42px;
 }
 
 .lock p{
+  color:#999;
+  font-size:19px;
   margin-top:10px;
-  color:#888;
-}
-
-.hidden{
-  display:none!important;
 }
 
 .footer{
@@ -285,7 +300,24 @@ input:focus{
   color:#aaa;
 }
 
-@media(max-width:600px){
+.error{
+  color:#e83261 !important;
+}
+
+.hidden{
+  display:none !important;
+}
+
+@media(max-width:650px){
+
+  .container{
+    margin:18px auto;
+  }
+
+  .card{
+    padding:19px;
+    border-radius:22px;
+  }
 
   .grid{
     grid-template-columns:1fr;
@@ -295,18 +327,21 @@ input:focus{
     grid-template-columns:1fr;
   }
 
-  .card{
-    padding:18px;
+  .big-number{
+    font-size:100px;
+  }
+
+  .popup-number{
+    font-size:75px;
   }
 
 }
-
 </style>
-
 </head>
 
 <body>
 
+<!-- HEADER -->
 <div class="header">
 
   <h1>🎀 Queue System</h1>
@@ -320,158 +355,222 @@ input:focus{
 
 <div class="container">
 
+  <!-- =========================
+       DISPLAY
+  ========================== -->
 
-<!-- DISPLAY -->
+  <section id="displayMode" class="hidden">
 
-<section id="displayMode" class="hidden">
+    <div class="card">
 
-  <div class="card">
-
-    <div class="mode-title">
-      📺 หน้าจอเรียกคิว
-    </div>
-
-    <div
-      id="displayNumber"
-      class="big-number">
-      ---
-    </div>
-
-    <div
-      id="displayChannel"
-      class="channel">
-      กรุณารอสักครู่
-    </div>
-
-    <div
-      id="displayStatus"
-      class="status">
-      กำลังเชื่อมต่อ...
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- CONTROL -->
-
-<section id="controlMode" class="hidden">
-
-  <div class="card">
-
-    <div class="mode-title">
-      🎛️ แผงควบคุม
-    </div>
-
-    <div class="info">
-
-      <div class="info-box">
-        <small>คิวปัจจุบัน</small>
-        <strong id="controlCurrent">
-          ---
-        </strong>
+      <div class="mode-title">
+        📺 หน้าจอเรียกคิว
       </div>
 
-      <div class="info-box">
-        <small>ช่องบริการ</small>
-        <strong id="controlChannel">
-          1
-        </strong>
+      <div
+        id="displayNumber"
+        class="big-number">
+        -
       </div>
 
-      <div class="info-box">
-        <small>คิวถัดไป</small>
-        <strong id="controlNext">
-          1
-        </strong>
+      <div
+        id="displayChannel"
+        class="channel">
+        กรุณารอสักครู่
+      </div>
+
+      <div
+        id="displayStatus"
+        class="status">
+        กำลังเชื่อมต่อ...
+      </div>
+
+      <!-- SOUND ENABLE -->
+
+      <div
+        id="soundBox"
+        class="sound-box">
+
+        <p>
+          🔊 เพื่อให้ระบบประกาศเสียงได้
+          กรุณากดปุ่มด้านล่าง 1 ครั้ง
+        </p>
+
+        <button
+          id="soundButton"
+          class="main"
+          onclick="enableSound()">
+
+          🔊 เปิดเสียงเรียกคิว
+
+        </button>
+
       </div>
 
     </div>
 
+  </section>
 
-    <div class="grid">
+
+  <!-- =========================
+       CONTROL
+  ========================== -->
+
+  <section id="controlMode" class="hidden">
+
+    <div class="card">
+
+      <div class="mode-title">
+        🎛️ แผงควบคุมเจ้าหน้าที่
+      </div>
+
+      <div class="info">
+
+        <div class="info-box">
+
+          <small>
+            คิวปัจจุบัน
+          </small>
+
+          <strong id="controlCurrent">
+            -
+          </strong>
+
+        </div>
+
+        <div class="info-box">
+
+          <small>
+            ช่องบริการ
+          </small>
+
+          <strong id="controlChannel">
+            1
+          </strong>
+
+        </div>
+
+        <div class="info-box">
+
+          <small>
+            คิวถัดไป
+          </small>
+
+          <strong id="controlNext">
+            1
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="grid">
+
+        <button
+          class="main"
+          onclick="nextQueue()">
+
+          📢 เรียกคิวถัดไป
+
+        </button>
+
+
+        <button
+          class="secondary"
+          onclick="recallQueue()">
+
+          🔊 เรียกคิวซ้ำ
+
+        </button>
+
+
+        <button
+          class="secondary"
+          onclick="changeChannel()">
+
+          🔢 เปลี่ยนช่อง
+
+        </button>
+
+
+        <button
+          class="secondary"
+          onclick="toggleLock()">
+
+          🔒 ล็อก / ปลดล็อกจอ
+
+        </button>
+
+
+        <button
+          class="danger"
+          onclick="resetQueue()">
+
+          🗑️ รีเซ็ตคิว
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       KIOSK
+  ========================== -->
+
+  <section id="kioskMode" class="hidden">
+
+    <div class="card">
+
+      <div class="mode-title">
+        🎟️ รับบัตรคิว
+      </div>
 
       <button
         class="main"
-        onclick="nextQueue()">
-        📢 เรียกคิวถัดไป
+        onclick="takeTicket()"
+        style="
+          font-size:32px;
+          padding:50px 20px;
+        ">
+
+        🎫
+
+        <br>
+
+        กดรับบัตรคิว
+
       </button>
 
-      <button
-        class="secondary"
-        onclick="recall()">
-        🔊 เรียกซ้ำ
-      </button>
+      <div
+        id="kioskStatus"
+        class="status">
 
-      <button
-        class="secondary"
-        onclick="changeChannel()">
-        🔢 เปลี่ยนช่อง
-      </button>
+        พร้อมรับบัตรคิว
 
-      <button
-        class="secondary"
-        onclick="toggleLock()">
-        🔒 ล็อก/ปลดล็อกหน้าจอ
-      </button>
-
-      <button
-        class="danger"
-        onclick="resetQueue()">
-        🗑️ รีเซ็ตคิว
-      </button>
+      </div>
 
     </div>
 
-  </div>
-
-</section>
-
-
-<!-- KIOSK -->
-
-<section id="kioskMode" class="hidden">
-
-  <div class="card">
-
-    <div class="mode-title">
-      🎟️ รับบัตรคิว
-    </div>
-
-    <button
-      class="main"
-      style="font-size:32px;padding:45px 20px"
-      onclick="takeTicket()">
-
-      🎫
-      <br>
-      กดรับบัตรคิว
-
-    </button>
-
-    <div
-      id="kioskStatus"
-      class="status">
-
-      พร้อมรับบัตรคิว
-
-    </div>
-
-  </div>
-
-</section>
-
+  </section>
 
 </div>
 
 
 <div class="footer">
-  Queue System • Pink Edition
+
+  Queue System • Pink Edition 🎀
+
 </div>
 
 
-<!-- TICKET POPUP -->
+<!-- =========================
+     TICKET POPUP
+========================== -->
 
 <div
   id="popup"
@@ -480,7 +579,7 @@ input:focus{
   <div class="popup-box">
 
     <h2>
-      🎉 ได้รับบัตรคิวแล้ว
+      🎉 รับบัตรคิวสำเร็จ
     </h2>
 
     <div
@@ -493,12 +592,12 @@ input:focus{
       กรุณารอเรียกหมายเลขของคุณ
     </p>
 
-    <br>
-
     <button
       class="main"
       onclick="closePopup()">
+
       ตกลง
+
     </button>
 
   </div>
@@ -506,7 +605,9 @@ input:focus{
 </div>
 
 
-<!-- LOCK -->
+<!-- =========================
+     LOCK SCREEN
+========================== -->
 
 <div
   id="lockScreen"
@@ -514,9 +615,9 @@ input:focus{
 
   <div>
 
-    <h2>
+    <div class="lock-icon">
       🔒
-    </h2>
+    </div>
 
     <h2>
       กรุณารอสักครู่
@@ -533,20 +634,22 @@ input:focus{
 
 <script>
 
-/* =================================
-   API
-================================= */
+/* ==================================================
+   GOOGLE APPS SCRIPT API
+================================================== */
 
 const API =
 "https://script.google.com/macros/s/AKfycbx0vgr-86AFRYBAzJCglbLAaMjauxQ65YM_5lqlJZiDsUFPWVmdLzx2Smp5NhsHTjQODQ/exec";
 
 
-/* =================================
+/* ==================================================
    MODE
-================================= */
+================================================== */
 
 const params =
-new URLSearchParams(location.search);
+new URLSearchParams(
+  window.location.search
+);
 
 const mode =
 params.get("mode") || "display";
@@ -555,160 +658,189 @@ params.get("mode") || "display";
 if(mode === "control"){
 
   document
-  .getElementById("controlMode")
-  .classList.remove("hidden");
+    .getElementById("controlMode")
+    .classList.remove("hidden");
 
   document
-  .getElementById("modeText")
-  .textContent =
-  "โหมดควบคุม";
+    .getElementById("modeText")
+    .textContent =
+    "โหมดควบคุมเจ้าหน้าที่";
 
 }
 
 else if(mode === "kiosk"){
 
   document
-  .getElementById("kioskMode")
-  .classList.remove("hidden");
+    .getElementById("kioskMode")
+    .classList.remove("hidden");
 
   document
-  .getElementById("modeText")
-  .textContent =
-  "โหมดรับบัตรคิว";
+    .getElementById("modeText")
+    .textContent =
+    "โหมดรับบัตรคิว";
 
 }
 
 else{
 
   document
-  .getElementById("displayMode")
-  .classList.remove("hidden");
+    .getElementById("displayMode")
+    .classList.remove("hidden");
 
   document
-  .getElementById("modeText")
-  .textContent =
-  "โหมดหน้าจอแสดงคิว";
+    .getElementById("modeText")
+    .textContent =
+    "โหมดหน้าจอแสดงคิว";
 
 }
 
 
-/* =================================
+/* ==================================================
    JSONP REQUEST
-================================= */
+================================================== */
 
-function request(action, data = {}){
+function request(action,data={}){
 
-  return new Promise((resolve,reject)=>{
+  return new Promise(
+    (resolve,reject)=>{
 
-    const callback =
-      "queueCallback_" +
-      Date.now() +
-      "_" +
-      Math.floor(Math.random()*100000);
-
-
-    const script =
-      document.createElement("script");
-
-
-    let finished = false;
-
-
-    window[callback] =
-      function(result){
-
-        if(finished) return;
-
-        finished = true;
-
-        cleanup();
-
-        resolve(result);
-
-      };
-
-
-    function cleanup(){
-
-      try{
-        script.remove();
-      }catch(e){}
-
-      try{
-        delete window[callback];
-      }catch(e){}
-
-    }
-
-
-    const query =
-      new URLSearchParams();
-
-    query.set("action",action);
-    query.set("callback",callback);
-
-
-    Object.keys(data).forEach(key=>{
-
-      query.set(
-        key,
-        String(data[key])
-      );
-
-    });
-
-
-    script.src =
-      API + "?" + query.toString();
-
-
-    script.onerror =
-      function(){
-
-        if(finished) return;
-
-        finished = true;
-
-        cleanup();
-
-        reject(
-          new Error(
-            "เชื่อมต่อ Google Apps Script ไม่สำเร็จ"
-          )
+      const callback =
+        "queueCallback_" +
+        Date.now() +
+        "_" +
+        Math.floor(
+          Math.random()*100000
         );
 
-      };
+
+      const script =
+        document.createElement("script");
 
 
-    document.body.appendChild(script);
+      let finished = false;
 
 
-    setTimeout(()=>{
+      const timer =
+        setTimeout(()=>{
 
-      if(finished) return;
+          if(finished) return;
 
-      finished = true;
+          finished = true;
 
-      cleanup();
+          cleanup();
 
-      reject(
-        new Error(
-          "Google Apps Script ไม่ตอบกลับ"
-        )
+          reject(
+            new Error(
+              "Google Apps Script ไม่ตอบกลับ"
+            )
+          );
+
+        },15000);
+
+
+      function cleanup(){
+
+        clearTimeout(timer);
+
+        try{
+          script.remove();
+        }catch(e){}
+
+        try{
+          delete window[callback];
+        }catch(e){}
+
+      }
+
+
+      window[callback] =
+        function(result){
+
+          if(finished)
+            return;
+
+          finished = true;
+
+          cleanup();
+
+          resolve(result);
+
+        };
+
+
+      const query =
+        new URLSearchParams();
+
+
+      query.set(
+        "action",
+        action
       );
 
-    },15000);
 
-  });
+      query.set(
+        "callback",
+        callback
+      );
+
+
+      Object.keys(data).forEach(
+        key=>{
+
+          query.set(
+            key,
+            String(data[key])
+          );
+
+        }
+      );
+
+
+      script.src =
+        API +
+        "?" +
+        query.toString();
+
+
+      script.onerror =
+        function(){
+
+          if(finished)
+            return;
+
+          finished = true;
+
+          cleanup();
+
+          reject(
+            new Error(
+              "เชื่อมต่อ Google Apps Script ไม่สำเร็จ"
+            )
+          );
+
+        };
+
+
+      document.body.appendChild(
+        script
+      );
+
+    }
+  );
 
 }
 
 
-/* =================================
-   SOUND
-================================= */
+/* ==================================================
+   AUDIO
+================================================== */
 
-function beep(){
+let soundEnabled = false;
+
+let audioContext = null;
+
+
+function createAudio(){
 
   try{
 
@@ -716,37 +848,99 @@ function beep(){
       window.AudioContext ||
       window.webkitAudioContext;
 
-    if(!AudioContext) return;
+    if(!AudioContext)
+      return null;
+
+    if(!audioContext){
+
+      audioContext =
+        new AudioContext();
+
+    }
+
+    if(
+      audioContext.state ===
+      "suspended"
+    ){
+
+      audioContext.resume();
+
+    }
+
+    return audioContext;
+
+  }catch(e){
+
+    return null;
+
+  }
+
+}
+
+
+function beep(){
+
+  try{
 
     const ctx =
-      new AudioContext();
+      createAudio();
 
-    const now =
+    if(!ctx)
+      return;
+
+
+    const start =
       ctx.currentTime;
 
 
-    [0,0.18,0.36].forEach(
-      (delay,index)=>{
+    const frequencies =
+      [650,850,1050];
 
-        const osc =
+
+    frequencies.forEach(
+      (frequency,index)=>{
+
+        const oscillator =
           ctx.createOscillator();
 
         const gain =
           ctx.createGain();
 
 
-        osc.frequency.value =
-          [700,900,1100][index];
-
-        gain.gain.value = 0.15;
+        oscillator.type =
+          "sine";
 
 
-        osc.connect(gain);
-        gain.connect(ctx.destination);
+        oscillator.frequency.value =
+          frequency;
 
 
-        osc.start(now + delay);
-        osc.stop(now + delay + 0.12);
+        gain.gain.setValueAtTime(
+          0.18,
+          start + index*0.18
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+          0.001,
+          start + index*0.18 + 0.13
+        );
+
+
+        oscillator.connect(gain);
+
+        gain.connect(
+          ctx.destination
+        );
+
+
+        oscillator.start(
+          start + index*0.18
+        );
+
+        oscillator.stop(
+          start + index*0.18 + 0.14
+        );
 
       }
     );
@@ -756,17 +950,22 @@ function beep(){
 }
 
 
-/* =================================
-   VOICE
-================================= */
+/* ==================================================
+   SPEECH
+================================================== */
 
 function speak(ticket,channel){
 
+  if(
+    !("speechSynthesis" in window)
+  ){
+
+    return;
+
+  }
+
+
   try{
-
-    if(!window.speechSynthesis)
-      return;
-
 
     speechSynthesis.cancel();
 
@@ -778,27 +977,112 @@ function speak(ticket,channel){
       channel;
 
 
-    const utter =
-      new SpeechSynthesisUtterance(text);
+    const utterance =
+      new SpeechSynthesisUtterance(
+        text
+      );
 
 
-    utter.lang = "th-TH";
-    utter.rate = 0.85;
-    utter.pitch = 1;
+    utterance.lang =
+      "th-TH";
+
+    utterance.rate =
+      0.82;
+
+    utterance.pitch =
+      1;
+
+    utterance.volume =
+      1;
 
 
-    speechSynthesis.speak(utter);
+    speechSynthesis.speak(
+      utterance
+    );
 
   }catch(e){}
 
 }
 
 
-/* =================================
-   DISPLAY REFRESH
-================================= */
+/* ==================================================
+   ENABLE SOUND
+================================================== */
+
+function enableSound(){
+
+  soundEnabled = true;
+
+
+  const ctx =
+    createAudio();
+
+
+  beep();
+
+
+  if(
+    "speechSynthesis"
+    in window
+  ){
+
+    const test =
+      new SpeechSynthesisUtterance(
+        "เปิดเสียงเรียกคิวแล้ว"
+      );
+
+    test.lang =
+      "th-TH";
+
+    test.rate =
+      0.85;
+
+    test.volume =
+      1;
+
+
+    speechSynthesis.cancel();
+
+    speechSynthesis.speak(test);
+
+  }
+
+
+  const button =
+    document.getElementById(
+      "soundButton"
+    );
+
+
+  button.textContent =
+    "🔊 เปิดเสียงแล้ว";
+
+
+  button.disabled =
+    true;
+
+
+  button.style.opacity =
+    "0.7";
+
+
+  document
+    .getElementById("soundBox")
+    .querySelector("p")
+    .textContent =
+    "✅ เปิดเสียงเรียกคิวแล้ว";
+
+
+}
+
+
+/* ==================================================
+   REFRESH
+================================================== */
 
 let lastCurrent = "";
+
+let firstLoad = true;
 
 
 async function refresh(){
@@ -809,127 +1093,193 @@ async function refresh(){
       await request("state");
 
 
-    if(!data || !data.ok){
+    if(
+      !data ||
+      data.ok === false
+    ){
 
-      showError(
+      throw new Error(
         data?.error ||
         "ระบบไม่ตอบกลับ"
       );
-
-      return;
 
     }
 
 
     const current =
-      data.current || "---";
+      data.current || "-";
+
 
     const channel =
-      data.channel || 1;
+      Number(
+        data.channel || 1
+      );
 
+
+    /* DISPLAY */
 
     if(mode === "display"){
 
       document
-      .getElementById("displayNumber")
-      .textContent =
-      current;
+        .getElementById(
+          "displayNumber"
+        )
+        .textContent =
+        current;
 
 
       document
-      .getElementById("displayChannel")
-      .textContent =
-      current === "---"
-      ? "กรุณารอสักครู่"
-      : "ช่องบริการ " + channel;
+        .getElementById(
+          "displayChannel"
+        )
+        .textContent =
+        current === "-"
+        ? "กรุณารอสักครู่"
+        : "📍 ช่องบริการ " + channel;
 
 
       document
-      .getElementById("displayStatus")
-      .textContent =
-      "เชื่อมต่อระบบแล้ว";
+        .getElementById(
+          "displayStatus"
+        )
+        .textContent =
+        "🟢 เชื่อมต่อระบบแล้ว";
 
 
-      const lockScreen =
+      document
+        .getElementById(
+          "displayStatus"
+        )
+        .classList.remove(
+          "error"
+        );
+
+
+      const lock =
         document.getElementById(
           "lockScreen"
         );
 
 
       if(data.locked){
-        lockScreen.classList.add("show");
+
+        lock.classList.add(
+          "show"
+        );
+
       }else{
-        lockScreen.classList.remove("show");
-      }
 
-
-      /*
-       * ถ้ามีคิวใหม่
-       * ให้หน้าจอพูด
-       */
-
-      if(
-        current !== "---" &&
-        current !== lastCurrent
-      ){
-
-        beep();
-
-        speak(
-          current,
-          channel
+        lock.classList.remove(
+          "show"
         );
 
       }
 
 
-      lastCurrent = current;
+      /*
+       * ไม่ประกาศตอนเปิดหน้า
+       * ประกาศเฉพาะเมื่อคิวเปลี่ยน
+       */
+
+      if(
+        !firstLoad &&
+        soundEnabled &&
+        current !== "-" &&
+        current !== lastCurrent
+      ){
+
+        beep();
+
+        setTimeout(
+          ()=>{
+
+            speak(
+              current,
+              channel
+            );
+
+          },
+          350
+        );
+
+      }
+
+
+      lastCurrent =
+        current;
+
+      firstLoad =
+        false;
 
     }
 
 
+    /* CONTROL */
+
     if(mode === "control"){
 
       document
-      .getElementById("controlCurrent")
-      .textContent =
-      current;
+        .getElementById(
+          "controlCurrent"
+        )
+        .textContent =
+        current;
 
 
       document
-      .getElementById("controlChannel")
-      .textContent =
-      channel;
+        .getElementById(
+          "controlChannel"
+        )
+        .textContent =
+        channel;
 
 
       document
-      .getElementById("controlNext")
-      .textContent =
-      data.next || 1;
+        .getElementById(
+          "controlNext"
+        )
+        .textContent =
+        data.next || 1;
 
     }
 
   }catch(error){
 
-    showError(
-      error.message ||
-      "ระบบไม่ตอบกลับ"
-    );
+    if(mode === "display"){
+
+      document
+        .getElementById(
+          "displayStatus"
+        )
+        .textContent =
+        "🔴 ระบบไม่ตอบกลับ";
+
+
+      document
+        .getElementById(
+          "displayStatus"
+        )
+        .classList.add(
+          "error"
+        );
+
+    }
 
   }
 
 }
 
 
-/* =================================
-   NEXT
-================================= */
+/* ==================================================
+   NEXT QUEUE
+================================================== */
 
 async function nextQueue(){
 
   try{
 
     beep();
+
 
     const result =
       await request("next");
@@ -940,13 +1290,18 @@ async function nextQueue(){
       alert(
         result.message ||
         result.error ||
-        "ไม่มีคิว"
+        "ไม่มีคิวรอ"
       );
 
       return;
 
     }
 
+
+    /*
+     * เจ้าหน้าที่กดปุ่มเอง
+     * จึงสามารถให้เบราว์เซอร์พูดได้
+     */
 
     speak(
       result.ticket,
@@ -969,16 +1324,18 @@ async function nextQueue(){
 }
 
 
-/* =================================
+/* ==================================================
    RECALL
-================================= */
+================================================== */
 
-async function recall(){
+async function recallQueue(){
 
   try{
 
     const result =
-      await request("recall");
+      await request(
+        "recall"
+      );
 
 
     if(!result.ok){
@@ -995,9 +1352,17 @@ async function recall(){
 
     beep();
 
-    speak(
-      result.ticket,
-      result.channel
+
+    setTimeout(
+      ()=>{
+
+        speak(
+          result.ticket,
+          result.channel
+        );
+
+      },
+      250
     );
 
 
@@ -1013,9 +1378,9 @@ async function recall(){
 }
 
 
-/* =================================
-   CHANNEL
-================================= */
+/* ==================================================
+   CHANGE CHANNEL
+================================================== */
 
 async function changeChannel(){
 
@@ -1034,10 +1399,14 @@ async function changeChannel(){
     Number(value);
 
 
-  if(!channel || channel < 1){
+  if(
+    !channel ||
+    channel < 1 ||
+    channel > 99
+  ){
 
     alert(
-      "กรุณาใส่หมายเลขช่องที่ถูกต้อง"
+      "กรุณากรอกช่อง 1-99"
     );
 
     return;
@@ -1083,30 +1452,31 @@ async function changeChannel(){
 }
 
 
-/* =================================
+/* ==================================================
    LOCK
-================================= */
-
-let isLocked = false;
-
+================================================== */
 
 async function toggleLock(){
 
   try{
 
     const state =
-      await request("state");
+      await request(
+        "state"
+      );
 
 
-    isLocked =
-      !Boolean(state.locked);
+    const newValue =
+      !Boolean(
+        state.locked
+      );
 
 
     const result =
       await request(
         "lock",
         {
-          value:isLocked
+          value:newValue
         }
       );
 
@@ -1138,26 +1508,28 @@ async function toggleLock(){
 }
 
 
-/* =================================
+/* ==================================================
    RESET
-================================= */
+================================================== */
 
 async function resetQueue(){
 
-  const confirmReset =
+  const answer =
     confirm(
-      "ต้องการรีเซ็ตคิวทั้งหมดใช่หรือไม่?"
+      "⚠️ ต้องการรีเซ็ตคิวทั้งหมดใช่หรือไม่?"
     );
 
 
-  if(!confirmReset)
+  if(!answer)
     return;
 
 
   try{
 
     const result =
-      await request("reset");
+      await request(
+        "reset"
+      );
 
 
     if(!result.ok){
@@ -1172,12 +1544,17 @@ async function resetQueue(){
     }
 
 
-    alert(
-      "รีเซ็ตคิวเรียบร้อยแล้ว"
-    );
+    lastCurrent = "";
+
+    firstLoad = true;
 
 
     await refresh();
+
+
+    alert(
+      "✅ รีเซ็ตคิวเรียบร้อยแล้ว"
+    );
 
 
   }catch(error){
@@ -1192,9 +1569,9 @@ async function resetQueue(){
 }
 
 
-/* =================================
+/* ==================================================
    TAKE TICKET
-================================= */
+================================================== */
 
 async function takeTicket(){
 
@@ -1205,7 +1582,7 @@ async function takeTicket(){
 
 
   status.textContent =
-    "กำลังออกบัตรคิว...";
+    "⏳ กำลังออกบัตรคิว...";
 
 
   try{
@@ -1214,7 +1591,9 @@ async function takeTicket(){
 
 
     const result =
-      await request("take");
+      await request(
+        "take"
+      );
 
 
     if(!result.ok){
@@ -1229,24 +1608,31 @@ async function takeTicket(){
 
 
     document
-    .getElementById("popupNumber")
-    .textContent =
-    result.ticket;
+      .getElementById(
+        "popupNumber"
+      )
+      .textContent =
+      result.ticket;
 
 
     document
-    .getElementById("popup")
-    .classList.add("show");
+      .getElementById(
+        "popup"
+      )
+      .classList.add(
+        "show"
+      );
 
 
     status.textContent =
-      "พร้อมรับบัตรคิว";
+      "✅ พร้อมรับบัตรคิว";
 
 
   }catch(error){
 
     status.textContent =
-      "ระบบไม่ตอบกลับ";
+      "🔴 ระบบไม่ตอบกลับ";
+
 
     alert(
       "ระบบไม่ตอบกลับ\n\n" +
@@ -1258,93 +1644,49 @@ async function takeTicket(){
 }
 
 
-/* =================================
-   POPUP
-================================= */
+/* ==================================================
+   CLOSE POPUP
+================================================== */
 
 function closePopup(){
 
   document
-  .getElementById("popup")
-  .classList.remove("show");
+    .getElementById(
+      "popup"
+    )
+    .classList.remove(
+      "show"
+    );
 
 }
 
 
-/* =================================
-   ERROR
-================================= */
-
-function showError(message){
-
-  if(mode === "display"){
-
-    document
-    .getElementById("displayStatus")
-    .textContent =
-      "⚠️ " + message;
-
-  }
-
-}
-
-
-/* =================================
+/* ==================================================
    START
-================================= */
+================================================== */
 
 async function start(){
 
-  try{
-
-    const result =
-      await request("state");
-
-
-    if(!result.ok){
-
-      showError(
-        result.error ||
-        "ระบบไม่พร้อมใช้งาน"
-      );
-
-      return;
-
-    }
-
-
-    refresh();
-
-
-  }catch(error){
-
-    showError(
-      "เชื่อมต่อระบบไม่ได้"
-    );
-
-  }
+  await refresh();
 
 }
+
+
+/* ==================================================
+   START SYSTEM
+================================================== */
+
+start();
 
 
 /*
- * Display / Control
- * อัปเดตทุก 2 วินาที
+ * อัปเดตข้อมูลทุก 2 วินาที
  */
 
-if(
-  mode === "display" ||
-  mode === "control"
-){
-
-  start();
-
-  setInterval(
-    refresh,
-    2000
-  );
-
-}
+setInterval(
+  refresh,
+  2000
+);
 
 </script>
 
