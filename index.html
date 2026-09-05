@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Queue Remote</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,"Noto Sans Thai",sans-serif;
+  background:#061426;
+  color:white;
+}
+
+.app{
+  min-height:100vh;
+  padding:18px;
+  background:
+    radial-gradient(circle at 50% 0%,#1684e8 0%,#0a3764 32%,#061426 70%);
+}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 22px;
+  border-radius:20px;
+  background:#ffffff12;
+  border:1px solid #ffffff20;
+  backdrop-filter:blur(15px);
+}
+
+.logo{
+  font-size:23px;
+  font-weight:900;
+}
+
+.logo span{
+  color:#4db3ff;
+}
+
+.badge{
+  padding:8px 14px;
+  border-radius:999px;
+  background:#ffffff15;
+  color:#a9d8ff;
+  font-size:14px;
+}
+
+.container{
+  width:min(1000px,95vw);
+  margin:25px auto;
+}
+
+.card{
+  background:#ffffff10;
+  border:1px solid #ffffff20;
+  border-radius:28px;
+  padding:28px;
+  box-shadow:0 25px 80px #0008;
+  backdrop-filter:blur(15px);
+}
+
+.center{
+  min-height:75vh;
+  display:grid;
+  place-items:center;
+}
+
+.muted{
+  color:#abc1d5;
+}
+
+.queueNumber{
+  text-align:center;
+  font-size:clamp(85px,18vw,180px);
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:-5px;
+  margin:25px 0;
+  text-shadow:0 10px 40px #0008;
+}
+
+.channel{
+  text-align:center;
+  color:#70c2ff;
+  font-size:25px;
+  font-weight:bold;
+}
+
+.status{
+  text-align:center;
+  font-size:18px;
+  color:#abc1d5;
+}
+
+.buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px;
+  margin-top:25px;
+}
+
+button{
+  border:0;
+  border-radius:16px;
+  padding:18px;
+  font-size:17px;
+  font-weight:900;
+  color:white;
+  background:#087cf0;
+  cursor:pointer;
+  transition:.2s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.1);
+}
+
+button:active{
+  transform:scale(.97);
+}
+
+.blue{
+  background:#087cf0;
+}
+
+.green{
+  background:#07996f;
+}
+
+.red{
+  background:#c4364f;
+}
+
+.dark{
+  background:#ffffff15;
+}
+
+.wide{
+  grid-column:1/-1;
+}
+
+.waiting{
+  margin-top:15px;
+  text-align:center;
+  color:#9fc2df;
+}
+
+.kiosk{
+  min-height:78vh;
+  display:grid;
+  place-items:center;
+}
+
+.ticketButton{
+  width:min(650px,92vw);
+  height:min(55vh,520px);
+  border-radius:42px;
+  font-size:clamp(42px,9vw,85px);
+  background:linear-gradient(145deg,#1794ff,#0757c7);
+  box-shadow:0 35px 100px #0009;
+}
+
+.ticketButton small{
+  display:block;
+  font-size:18px;
+  margin-top:20px;
+  opacity:.8;
+}
+
+.popup{
+  position:fixed;
+  inset:0;
+  display:none;
+  place-items:center;
+  background:#000b;
+  z-index:100;
+}
+
+.popup.show{
+  display:grid;
+}
+
+.ticket{
+  width:min(560px,92vw);
+  background:white;
+  color:#071426;
+  border-radius:30px;
+  padding:35px;
+  text-align:center;
+  box-shadow:0 30px 100px #000;
+}
+
+.ticketNumber{
+  font-size:clamp(75px,18vw,150px);
+  font-weight:1000;
+  color:#076bd8;
+  line-height:1;
+  margin:20px 0;
+}
+
+.lockScreen{
+  position:fixed;
+  inset:0;
+  z-index:90;
+  display:none;
+  place-items:center;
+  background:#02070dcc;
+  backdrop-filter:blur(12px);
+  text-align:center;
+}
+
+.lockScreen.show{
+  display:grid;
+}
+
+.lockIcon{
+  font-size:90px;
+}
+
+input{
+  width:100%;
+  padding:16px;
+  margin-top:10px;
+  border-radius:14px;
+  border:1px solid #ffffff25;
+  outline:none;
+  background:#ffffff10;
+  color:white;
+  font-size:17px;
+}
+
+input::placeholder{
+  color:#91a8bc;
+}
+
+.message{
+  margin-top:15px;
+  min-height:25px;
+  color:#9fd3ff;
+}
+
+.loginBox{
+  width:min(500px,94vw);
+}
+
+.loginTitle{
+  font-size:32px;
+  font-weight:900;
+}
+
+.info{
+  padding:13px 15px;
+  border-radius:13px;
+  background:#ffffff0d;
+  color:#aac0d4;
+  margin-top:15px;
+  font-size:14px;
+}
+
+@media(max-width:650px){
+
+  .app{
+    padding:10px;
+  }
+
+  header{
+    padding:15px;
+  }
+
+  .buttons{
+    grid-template-columns:1fr;
+  }
+
+  .wide{
+    grid-column:auto;
+  }
+
+  .card{
+    padding:20px;
+  }
+
+  .ticketButton{
+    height:60vh;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script>
+
+/* =====================================================
+   QUEUE REMOTE API
+   URL ถูกใส่ไว้ให้แล้ว
+===================================================== */
+
+const API =
+"https://script.google.com/macros/s/AKfycbx0vgr-86AFRYBAzJcglbLAaMjauxQ65YM_5lqlJZiDsUFPWVmdLzx2Smp5NhsHTjQODQ/exec";
+
+
+/* =====================================================
+   MODE
+===================================================== */
+
+const params = new URLSearchParams(location.search);
+
+const mode =
+params.get("mode") || "display";
+
+
+/*
+   display = หน้าจอแสดงคิว
+   control = เครื่องเจ้าหน้าที่
+   kiosk   = เครื่องกดบัตร
+*/
+
+
+let data = {
+  current:"-",
+  channel:"1",
+  locked:false,
+  waiting:0
+};
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+let verified =
+sessionStorage.getItem("QUEUE_VERIFIED")==="1";
+
+let verifiedEmail =
+sessionStorage.getItem("QUEUE_EMAIL") || "";
+
+
+/* =====================================================
+   API
+===================================================== */
+
+async function request(action,body={}){
+
+  if(!API){
+    throw new Error("ยังไม่ได้ตั้งค่า API");
+  }
+
+  if(action==="state"){
+
+    const response =
+      await fetch(
+        API+"?action=state",
+        {
+          cache:"no-store"
+        }
+      );
+
+    return await response.json();
+  }
+
+
+  const response =
+    await fetch(
+      API,
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":
+          "text/plain;charset=utf-8"
+        },
+        body:JSON.stringify({
+          action,
+          ...body
+        })
+      }
+    );
+
+  return await response.json();
+}
+
+
+/* =====================================================
+   SOUND
+===================================================== */
+
+function beep(){
+
+  try{
+
+    const Audio =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+    const ctx =
+      new Audio();
+
+    const audioCtx =
+      new AudioContext();
+
+    const tones =
+      [660,880,1040];
+
+    tones.forEach((frequency,index)=>{
+
+      const oscillator =
+        audioCtx.createOscillator();
+
+      const gain =
+        audioCtx.createGain();
+
+      oscillator.frequency.value =
+        frequency;
+
+      oscillator.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      gain.gain.value=.12;
+
+      oscillator.start(
+        audioCtx.currentTime+
+        index*.15
+      );
+
+      oscillator.stop(
+        audioCtx.currentTime+
+        index*.15+
+        .12
+      );
+
+    });
+
+  }catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+
+/* =====================================================
+   THAI VOICE
+===================================================== */
+
+function speak(number,channel){
+
+  try{
+
+    speechSynthesis.cancel();
+
+    const voice =
+      new SpeechSynthesisUtterance(
+        `เชิญหมายเลข ${number} ที่ช่อง ${channel}`
+      );
+
+    voice.lang="th-TH";
+    voice.rate=.9;
+    voice.pitch=1;
+
+    speechSynthesis.speak(voice);
+
+  }catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(/[&<>"']/g,function(char){
+
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#39;"
+      }[char];
+
+    });
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+function header(title){
+
+  return `
+
+  <header>
+
+    <div class="logo">
+      QUEUE <span>REMOTE</span>
+    </div>
+
+    <div class="badge">
+      ${esc(title)}
+    </div>
+
+  </header>
+
+  `;
+
+}
+
+
+/* =====================================================
+   EMAIL LOGIN
+===================================================== */
+
+function login(){
+
+  root.innerHTML=`
+
+  <div class="app">
+
+    <div class="center">
+
+      <div class="card loginBox">
+
+        <div class="loginTitle">
+          🔐 เข้าสู่ระบบควบคุม
+        </div>
+
+        <p class="muted">
+          ต้องยืนยันอีเมลก่อนใช้งานหน้า Control
+        </p>
+
+        <input
+          id="email"
+          type="email"
+          placeholder="กรอกอีเมลของคุณ"
+        >
+
+        <button
+          class="blue"
+          style="width:100%;margin-top:12px"
+          onclick="sendOTP()"
+        >
+          📧 ส่งรหัสยืนยัน
+        </button>
+
+        <div
+          id="otpBox"
+          style="display:none"
+        >
+
+          <input
+            id="otp"
+            inputmode="numeric"
+            maxlength="6"
+            placeholder="กรอกรหัส 6 หลัก"
+          >
+
+          <button
+            class="green"
+            style="width:100%;margin-top:12px"
+            onclick="verifyOTP()"
+          >
+            ✓ ยืนยันรหัส
+          </button>
+
+        </div>
+
+        <div
+          id="loginMessage"
+          class="message"
+        ></div>
+
+        <div class="info">
+          รหัสยืนยันมีอายุ 5 นาที
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   SEND OTP
+===================================================== */
+
+async function sendOTP(){
+
+  const email =
+    document
+      .getElementById("email")
+      .value
+      .trim();
+
+  const message =
+    document.getElementById(
+      "loginMessage"
+    );
+
+  if(!email){
+
+    message.textContent =
+      "กรุณากรอกอีเมล";
+
+    return;
+  }
+
+
+  message.textContent =
+    "กำลังส่งรหัส...";
+
+
+  try{
+
+    const result =
+      await request(
+        "sendOTP",
+        {
+          email
+        }
+      );
+
+
+    if(result.ok){
+
+      message.textContent =
+        "ส่งรหัสไปที่อีเมลแล้ว 📧";
+
+      document
+        .getElementById("otpBox")
+        .style.display="block";
+
+    }else{
+
+      message.textContent =
+        "ส่งไม่สำเร็จ: "+
+        result.error;
+
+    }
+
+  }catch(error){
+
+    message.textContent =
+      error.message;
+
+  }
+
+}
+
+
+/* =====================================================
+   VERIFY OTP
+===================================================== */
+
+async function verifyOTP(){
+
+  const email =
+    document
+      .getElementById("email")
+      .value
+      .trim();
+
+  const otp =
+    document
+      .getElementById("otp")
+      .value
+      .trim();
+
+  const message =
+    document.getElementById(
+      "loginMessage"
+    );
+
+
+  if(!otp){
+
+    message.textContent =
+      "กรุณากรอกรหัส";
+
+    return;
+  }
+
+
+  message.textContent =
+    "กำลังตรวจสอบ...";
+
+
+  try{
+
+    const result =
+      await request(
+        "verifyOTP",
+        {
+          email,
+          otp
+        }
+      );
+
+
+    if(result.ok){
+
+      verified=true;
+      verifiedEmail=email;
+
+      sessionStorage.setItem(
+        "QUEUE_VERIFIED",
+        "1"
+      );
+
+      sessionStorage.setItem(
+        "QUEUE_EMAIL",
+        email
+      );
+
+      render();
+
+      refresh();
+
+    }else{
+
+      message.textContent =
+        result.error;
+
+    }
+
+  }catch(error){
+
+    message.textContent =
+      error.message;
+
+  }
+
+}
+
+
+/* =====================================================
+   DISPLAY MODE
+===================================================== */
+
+function display(){
+
+  root.innerHTML=`
+
+  <div class="app">
+
+    ${header("DISPLAY")}
+
+    <div class="center">
+
+      <div class="card"
+           style="width:min(900px,95vw)">
+
+        <div class="channel">
+          ช่อง ${esc(data.channel)}
+        </div>
+
+        <div class="queueNumber">
+          ${esc(data.current)}
+        </div>
+
+        <div class="status">
+          กรุณารอเรียกคิว
+        </div>
+
+        <div class="waiting">
+          คิวที่รออยู่ ${data.waiting} ใบ
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="lockScreen ${data.locked?"show":""}"
+    >
+
+      <div>
+
+        <div class="lockIcon">
+          🔒
+        </div>
+
+        <h1>
+          หน้าจอถูกล็อก
+        </h1>
+
+        <p class="muted">
+          กรุณารอเจ้าหน้าที่ปลดล็อก
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   CONTROL MODE
+===================================================== */
+
+function control(){
+
+  root.innerHTML=`
+
+  <div class="app">
+
+    ${header("CONTROL")}
+
+    <div class="container">
+
+      <div class="card">
+
+        <div class="muted">
+          ผู้ควบคุม:
+          ${esc(verifiedEmail)}
+        </div>
+
+        <div
+          class="channel"
+          style="margin-top:10px"
+        >
+          ช่อง ${esc(data.channel)}
+        </div>
+
+        <div class="queueNumber">
+          ${esc(data.current)}
+        </div>
+
+        <div class="status">
+          คิวรอ ${data.waiting} ใบ
+        </div>
+
+
+        <div class="buttons">
+
+          <button
+            class="blue"
+            onclick="nextQueue()"
+          >
+            ▶️ เรียกคิวถัดไป
+          </button>
+
+
+          <button
+            class="dark"
+            onclick="recall()"
+          >
+            🔊 เรียกซ้ำ
+          </button>
+
+
+          <button
+            class="dark"
+            onclick="changeChannel()"
+          >
+            🏢 เปลี่ยนช่อง
+          </button>
+
+
+          <button
+            class="${data.locked?"green":"red"}"
+            onclick="toggleLock()"
+          >
+
+            ${
+              data.locked
+              ?"🔓 ปลดล็อกหน้าจอ"
+              :"🔒 ล็อกหน้าจอ"
+            }
+
+          </button>
+
+
+          <button
+            class="red wide"
+            onclick="resetQueue()"
+          >
+            🗑️ รีเซ็ตคิววันนี้
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   KIOSK MODE
+===================================================== */
+
+function kiosk(){
+
+  root.innerHTML=`
+
+  <div class="app">
+
+    ${header("KIOSK")}
+
+    <div class="kiosk">
+
+      <button
+        class="ticketButton"
+        onclick="takeTicket()"
+      >
+
+        🎫
+
+        <br>
+
+        กดบัตรคิว
+
+        <small>
+          แตะเพื่อรับบัตรคิว
+        </small>
+
+      </button>
+
+    </div>
+
+
+    <div
+      id="ticketPopup"
+      class="popup"
+    >
+
+      <div class="ticket">
+
+        <div class="muted">
+          บัตรคิวของคุณ
+        </div>
+
+        <div
+          id="ticketNumber"
+          class="ticketNumber"
+        >
+          A000
+        </div>
+
+        <p>
+          กรุณารอเรียกหมายเลขของคุณ
+        </p>
+
+        <button
+          class="dark"
+          style="color:#071426"
+          onclick="closeTicket()"
+        >
+          ปิด
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   REFRESH
+===================================================== */
+
+async function refresh(){
+
+  try{
+
+    const result =
+      await request("state");
+
+    if(result){
+
+      data=result;
+
+      if(mode!=="kiosk"){
+
+        render();
+
+      }
+
+    }
+
+  }catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+
+/* =====================================================
+   NEXT QUEUE
+===================================================== */
+
+async function nextQueue(){
+
+  try{
+
+    const result =
+      await request("next");
+
+
+    if(result.ok){
+
+      beep();
+
+      speak(
+        result.number,
+        result.channel
+      );
+
+      refresh();
+
+    }else{
+
+      alert(
+        result.error ||
+        "ไม่มีคิวรอ"
+      );
+
+    }
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+}
+
+
+/* =====================================================
+   RECALL
+===================================================== */
+
+function recall(){
+
+  if(
+    data.current &&
+    data.current!=="-"
+  ){
+
+    beep();
+
+    speak(
+      data.current,
+      data.channel
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   LOCK / UNLOCK
+===================================================== */
+
+async function toggleLock(){
+
+  try{
+
+    const result =
+      await request(
+        "lock",
+        {
+          locked:!data.locked
+        }
+      );
+
+    if(result.ok){
+
+      refresh();
+
+    }
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+}
+
+
+/* =====================================================
+   CHANGE CHANNEL
+===================================================== */
+
+async function changeChannel(){
+
+  const channel =
+    prompt(
+      "กรอกหมายเลขช่อง",
+      data.channel
+    );
+
+
+  if(!channel)
+    return;
+
+
+  try{
+
+    const result =
+      await request(
+        "channel",
+        {
+          channel
+        }
+      );
+
+
+    if(result.ok){
+
+      refresh();
+
+    }
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+async function resetQueue(){
+
+  const confirmReset =
+    confirm(
+      "ต้องการรีเซ็ตคิวทั้งหมดของวันนี้ใช่หรือไม่?"
+    );
+
+
+  if(!confirmReset)
+    return;
+
+
+  try{
+
+    const result =
+      await request("reset");
+
+
+    if(result.ok){
+
+      alert("รีเซ็ตคิวเรียบร้อย");
+
+      refresh();
+
+    }
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+}
+
+
+/* =====================================================
+   TAKE TICKET
+===================================================== */
+
+async function takeTicket(){
+
+  try{
+
+    const result =
+      await request("take");
+
+
+    if(result.ok){
+
+      beep();
+
+      document
+        .getElementById(
+          "ticketNumber"
+        )
+        .textContent =
+        result.number;
+
+
+      document
+        .getElementById(
+          "ticketPopup"
+        )
+        .classList
+        .add("show");
+
+
+    }else{
+
+      alert(
+        result.error ||
+        "ไม่สามารถออกบัตรคิวได้"
+      );
+
+    }
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+}
+
+
+/* =====================================================
+   CLOSE TICKET
+===================================================== */
+
+function closeTicket(){
+
+  const popup =
+    document.getElementById(
+      "ticketPopup"
+    );
+
+  if(popup){
+
+    popup
+      .classList
+      .remove("show");
+
+  }
+
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function render(){
+
+  if(mode==="control"){
+
+    if(!verified){
+
+      login();
+
+    }else{
+
+      control();
+
+    }
+
+  }
+
+  else if(mode==="kiosk"){
+
+    kiosk();
+
+  }
+
+  else{
+
+    display();
+
+  }
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+render();
+
+
+if(mode!=="kiosk"){
+
+  refresh();
+
+  setInterval(
+    refresh,
+    2000
+  );
+
+}
+
+</script>
+
+</body>
+</html>
